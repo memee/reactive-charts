@@ -43,5 +43,11 @@
     "mocha": "^3.2.0",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
+  },
+  "peerDependencies": {
+    "d3": "^4.4.4"
+  },
+  "dependencies": {
+    "ramda": "^0.23.0"
   }
 }
