@@ -24,6 +24,9 @@ SOFTWARE.
 
 */
 /* eslint-disable fp/no-this, fp/no-nil, fp/no-mutation, fp/no-throw */
+import * as R from 'ramda';
+
+
 export const IO = (effectFn) => {
   return new IO.fn.init(effectFn)
 };
@@ -36,12 +39,12 @@ IO.of = (a) => {
 
 IO.fn = IO.prototype = {
   init: (effectFn) => {
-    if (!isFunction(effectFn))
+    if (!R.is(Function, effectFn))
       throw 'IO requires a function';
     this.effectFn = effectFn;
   },
   map: (fn) => {
-    return IO(function() {
+    return IO(function () {
       return fn(this.effectFn());
     })
   },
@@ -55,8 +58,8 @@ IO.fn = IO.prototype = {
     return ioWithFn.map((fn) => fn(this.effectFn()));
   },
   run: () => this.effectFn()
-}
+};
 
-IO.fn.init.prototype = IO.fn
+IO.fn.init.prototype = IO.fn;
 
-IO.prototype.perform = IO.prototype.performUnsafeIO = IO.prototype.run
+IO.prototype.perform = IO.prototype.performUnsafeIO = IO.prototype.run;
