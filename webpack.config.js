@@ -8,7 +8,6 @@ var libraryName = JSON.parse(readFileSync(__dirname + '/package.json')).name;
 module.exports = function(options) {
   var plugins = [], outputFile, entry, output;
   var libSource = __dirname + '/src/index.js';
-  var externals;
 
   if (options === 'build') {
     plugins = plugins.concat([
@@ -27,9 +26,6 @@ module.exports = function(options) {
     ]);
 
     entry = libSource;
-    externals = {
-      'd3': 'd3'
-    };
     outputFile = libraryName + '.min.js';
     output = {
       path: __dirname + '/lib',
@@ -67,10 +63,19 @@ module.exports = function(options) {
   }
 
   return {
-    entry: entry,
+    devServer: {
+      contentBase: [
+        path.join(__dirname, 'examples'),
+        path.join(__dirname, 'node_modules/d3/build')
+      ],
+      compress: true,
+      port: 8080
+    },
     devtool: 'source-map',
-    output: output,
-    externals: externals,
+    entry: entry,
+    externals: {
+      'd3': 'd3'
+    },
     module: {
       rules: [
         {
@@ -85,10 +90,11 @@ module.exports = function(options) {
         }
       ]
     },
+    output: output,
+    plugins: plugins,
     resolve: {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],
       extensions: ['.js']
-    },
-    plugins: plugins
+    }
   };
-}
+};
