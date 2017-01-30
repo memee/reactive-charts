@@ -9,7 +9,10 @@
     "es6": true,
     "node": true
   },
-  "extends": "plugin:fp/recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:fp/recommended"
+  ],
   "globals": {
     "document": false,
     "escape": false,
@@ -28,7 +31,11 @@
     "flowtype"
   ],
   "rules": {
-    // ... lots of lots of rules here
+    "quotes": ["error", "single"],
+    "linebreak-style": ["error", "unix"],
+    "indent": ["error", 2],
+    "semi": ["error", "always"],
+
   },
   "settings": {
     "flowtype": {
