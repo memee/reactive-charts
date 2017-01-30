@@ -24,9 +24,15 @@
   },
   "parser": "babel-eslint",
   "plugins": [
-    "fp"
+    "fp",
+    "flowtype"
   ],
   "rules": {
     // ... lots of lots of rules here
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
   }
 }
