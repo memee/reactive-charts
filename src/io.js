@@ -28,13 +28,13 @@ import * as R from 'ramda';
 
 
 export const IO = (effectFn) => {
-  return new IO.fn.init(effectFn)
+  return new IO.fn.init(effectFn);
 };
 
 IO.of = (a) => {
   return IO(() => {
     return a;
-  })
+  });
 };
 
 IO.fn = IO.prototype = {
@@ -46,13 +46,13 @@ IO.fn = IO.prototype = {
   map: (fn) => {
     return IO(function () {
       return fn(this.effectFn());
-    })
+    });
   },
   bind: (fn) => {
     return IO(() => {
       return fn(this.effectFn())
         .run();
-    })
+    });
   },
   ap: (ioWithFn) => {
     return ioWithFn.map((fn) => fn(this.effectFn()));
