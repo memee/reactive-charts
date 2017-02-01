@@ -35,7 +35,8 @@
     "linebreak-style": ["error", "unix"],
     "indent": ["error", 2],
     "semi": ["error", "always"],
-
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1
   },
   "settings": {
     "flowtype": {
