@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npm run flow && webpack --colors --env build",
     "dev": "npm run flow && webpack-dev-server --env dev --config webpack.config.js --progress --colors --profile --watch",
-    "flow": "flow check",
+    "flow": "flow",
+    "flow:check": "flow check",
     "lint": "eslint src/**/*.js",
     "test": "mocha --compilers js:babel-core/register --colors -w ./src/**/*.spec.js"
   },
