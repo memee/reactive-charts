@@ -37,6 +37,7 @@ import * as R from 'ramda';
 export class IO<T> {
   effectFn: () => T;
 
+  chain: any;
   perform: any;
   performUnsafeIO: any;
 
@@ -68,3 +69,4 @@ export class IO<T> {
 }
 
 IO.prototype.perform = IO.prototype.performUnsafeIO = IO.prototype.run;
+IO.prototype.chain = IO.prototype.bind;
