@@ -1,4 +1,7 @@
-/* IO monad taken from monet.js */
+/* @flow */
+
+/* IO monad based on that from monet.js. Modified to be more inlined with Folktale datatypes and
+ * classed to be easier to use with flow type system */
 /*
 The MIT License (MIT)
 
@@ -27,39 +30,41 @@ SOFTWARE.
 import * as R from 'ramda';
 
 
-export const IO = (effectFn) => {
-  return new IO.fn.init(effectFn);
-};
+// Here we're against fp rules but we're preparing Monad which we would eventually
+// had to do sugar-less style with violating fp/no-this, fp/no-nil, fp/no-mutation.
+// And with class we get better flow-type support
+/* eslint-disable fp/no-class, fp/no-this, fp/no-nil, fp/no-mutation, fp/no-throw */
+export class IO<T> {
+  effectFn: () => T;
 
-IO.of = (a) => {
-  return IO(() => {
-    return a;
-  });
-};
+  perform: any;
+  performUnsafeIO: any;
 
-IO.fn = IO.prototype = {
-  init: (effectFn) => {
+  constructor(effectFn: () => T) {
     if (!R.is(Function, effectFn))
-      throw 'IO requires a function';
+      throw 'IO Requires a function';
     this.effectFn = effectFn;
-  },
-  map: (fn) => {
-    return IO(function () {
+  }
+
+  map(fn: any) {
+    return new IO(() => {
       return fn(this.effectFn());
     });
-  },
-  bind: (fn) => {
-    return IO(() => {
-      return fn(this.effectFn())
-        .run();
-    });
-  },
-  ap: (ioWithFn) => {
-    return ioWithFn.map((fn) => fn(this.effectFn()));
-  },
-  run: () => this.effectFn()
-};
+  }
 
-IO.fn.init.prototype = IO.fn;
+  bind(fn: any) {
+    return new IO(() => {
+      return fn(this.effectFn()).run();
+    });
+  }
+
+  ap(ioWithFn: any) {
+    return ioWithFn.map(fn => fn(this.effectFn()));
+  }
+
+  run() {
+    return this.effectFn();
+  }
+}
 
 IO.prototype.perform = IO.prototype.performUnsafeIO = IO.prototype.run;
