@@ -1,4 +1,3 @@
-/* @flow */
 /* eslint-disable */
 
 import { chain, curry, compose, map } from 'ramda';
@@ -7,19 +6,18 @@ import { IO } from './io';
 import { d3select, append } from './d3io/d3io';
 
 
-// eslint-disable-next-line no-unused-vars
-const trace = curry((tag, x) => {
-  // eslint-disable-next-line no-console, fp/no-unused-expression
-  console.log(tag, x);
-  return x;
-});
-
 const render = compose(chain(append('svg')), d3select);
 
-render('body').perform();
+// render('body').perform();
 
-// console.log(append('body').bind(d3select)('svg').perform());
-// console.log(d3select('body').bind(append('svg')).perform());
+export const chart = (components, layout, data) => {
+
+}
+
+// Use it!
+const newChart = chart({
+
+})
 
 
 // const data = [
