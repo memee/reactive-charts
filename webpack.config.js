@@ -38,27 +38,33 @@ module.exports = function(options) {
   } else {
 
     plugins = plugins.concat([
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: Infinity,
-        filename: '[name].[hash].js',
-      }),
 
       new HtmlWebpackPlugin({
         template: path.join(__dirname, '/examples/index.html'),
         filename: 'index.html',
         inject: 'body',
+        chunks: []
+      }),
+
+      // TODO: remember to provide offline build of examples (here's dynamic)
+      new HtmlWebpackPlugin({
+        template: path.join(__dirname, '/examples/single.html'),
+        filename: 'multibar-line/index.html',
+        chunks: ['reactiveCharts', 'multibarLine']
       })
     ]);
 
     entry = {
-      lib: libSource,
-      vendor: ['d3']
+      'reactiveCharts': libSource,
+      // examples
+      'multibarLine': path.join(__dirname, '/examples/multibar-line/index.js')
     };
     outputFile = libraryName + '.js';
     output = {
-      filename: '[name].[hash].js',
+      filename: '[name].js',
       path: path.join(__dirname, '/build/'),
+      library: ['[name]'],
+      libraryTarget: 'var'
     };
   }
 
