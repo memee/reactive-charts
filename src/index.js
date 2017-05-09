@@ -1,5 +1,13 @@
-/* @flow */
+import { chain, compose } from 'ramda';
+import { d3select, append } from './d3io/d3io';
 
-import * as d3 from 'd3';
 
-const x = d3.scaleLinear().range([100, 0]);
+const renderSVG = compose(chain(append('svg')), d3select);
+
+export const chart = (components, layout, data) => {} // eslint-disable-line
+
+export const render = (selector) => {
+  return (chart) => { // eslint-disable-line
+    return renderSVG(selector).perform();
+  };
+};
