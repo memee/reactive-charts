@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /* eslint-disable fp/no-unused-expression, fp/no-nil, fp/no-mutation, no-console */
 const Chance = require('chance');
 const R = require('ramda');

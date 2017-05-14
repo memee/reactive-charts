@@ -4,6 +4,7 @@
   "description": "reusable reactive charts based on d3",
   "main": "lib/reactive-charts.js",
   "scripts": {
+    "api": "./examples/api.js",
     "build": "npm run flow && webpack --colors --env build",
     "dev": "npm run flow && webpack-dev-server --env dev --config webpack.config.js --progress --colors --profile --watch",
     "flow": "flow",
