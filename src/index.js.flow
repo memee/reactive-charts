@@ -32,8 +32,20 @@ declare module 'reactive-charts' {
     showLegend?: boolean;
   }
 
+  declare interface IDataOptions {
+    url: string,
+    interval: number
+  }
+
+  // could be ws url, Promise or options
+  declare type IData = string | Promise<any> | IDataOptions;
+
   // TODO: placeholder declaration - specific types should be provided here
-  declare function chart(components: IComponent[], layout: ILayout, data?: any): IFunctor<any>;
+  declare function chart(
+    components: IComponent[],
+    layout: ILayout,
+    dataOrOptions?: IData
+  ): IFunctor<any>;
   // A `render` function should return a function that'll take chart function as an
   // argument and perform all necessary IO.
   declare function render(selector: string): (IFunctor<any>) => void;
