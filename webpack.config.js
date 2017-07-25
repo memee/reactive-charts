@@ -86,8 +86,14 @@ module.exports = function(options) {
       rules: [
         {
           test: /(\.jsx|\.js)$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              plugins: ['transform-flow-strip-types'],
+              presets: [['es2015', { modules: false }]]
+            }
+          }
         },
         {
           test: /(\.jsx|\.js)$/,
