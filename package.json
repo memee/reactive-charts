@@ -46,6 +46,7 @@
     "flow-bin": "^0.38.0",
     "html-webpack-plugin": "^2.26.0",
     "json-server": "^0.10.0",
+    "jsverify": "^0.8.2",
     "tape": "^4.7.0",
     "tape-watch": "^2.3.0",
     "webpack": "^2.2.0",
