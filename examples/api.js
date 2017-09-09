@@ -20,19 +20,24 @@ server.get('/multibar-line', (req, res) => {
   const NOW = new Date();
 
   const createTimeSerie = R.curry((valueFunc, dt) => [dt, valueFunc()]);
-  const createTimeRandomValueSerie = createTimeSerie(() => chance.floating({min: 0, max: 10**5}));
+  const createTimeRandomValueSerie = createTimeSerie(
+    () => chance.floating({min: 0, max: 10**5})
+  );
 
-  const addSecond = R.curry((num, dt) => new Date(new Date(dt).setSeconds(new Date(dt).getSeconds()+num)));
-  const plusSecondInterval = addSecond(INTERVAL);
+  const addSeconds = R.curry(
+    (num, dt) => new Date(new Date(dt).setSeconds(new Date(dt).getSeconds()+num))
+  );
+  const addInterval = addSeconds(INTERVAL);
+  const negativeInterval = addSeconds(-11 * INTERVAL, NOW);
   const prevDate = prevArr => prevArr.slice(-1)[0][0];
   const valuesReducer =
-    R.reduce((prev) => [...prev, createTimeRandomValueSerie(plusSecondInterval(prevDate(prev)))]);
+    R.reduce((prev) => [...prev, createTimeRandomValueSerie(addInterval(prevDate(prev)))]);
 
   const data = [
     {
       key: 'Cost',
       bar: true,
-      values: valuesReducer([createTimeRandomValueSerie(addSecond(-11 * INTERVAL, NOW))], range(10))
+      values: valuesReducer([createTimeRandomValueSerie(negativeInterval)], range(10))
     },
     {
       key: 'Forecast',
