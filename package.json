@@ -43,7 +43,7 @@
     "eslint-plugin-flowtype": "^2.35.0",
     "eslint-plugin-fp": "^2.3.0",
     "faucet": "0.0.1",
-    "flow-bin": "^0.38.0",
+    "flow-bin": "^0.51.0",
     "html-webpack-plugin": "^2.26.0",
     "json-server": "^0.10.0",
     "jsverify": "^0.8.2",
