@@ -16,37 +16,72 @@ server.use(middlewares);
 server.get('/multibar-line', (req, res) => {
   const range = length => Array.apply(undefined, {length: length});
 
+  const HISTORY_LENGTH = parseInt(req.query.history_length || 0);
+  const FORECAST_HORIZON = 4;
   const INTERVAL = 5;
   const NOW = new Date();
+
+  const backInHistory = -HISTORY_LENGTH * INTERVAL;
+  const forecastLength = HISTORY_LENGTH > FORECAST_HORIZON ?
+    FORECAST_HORIZON : HISTORY_LENGTH;
 
   const createTimeSerie = R.curry((valueFunc, dt) => [dt, valueFunc()]);
   const createTimeRandomValueSerie = createTimeSerie(
     () => chance.floating({min: 0, max: 10**5})
   );
 
-  const addSeconds = R.curry(
-    (num, dt) => new Date(new Date(dt).setSeconds(new Date(dt).getSeconds()+num))
+  const setSeconds = R.curry(
+    (addOrSubtract, num, dt) => new Date(
+      new Date(dt).setSeconds(addOrSubtract(new Date(dt).getSeconds(), num))
+    )
   );
+  const addSeconds = setSeconds(R.add);
+  const subtractSeconds = setSeconds(R.subtract);
   const addInterval = addSeconds(INTERVAL);
-  const negativeInterval = addSeconds(-11 * INTERVAL, NOW);
-  const prevDate = prevArr => prevArr.slice(-1)[0][0];
-  const valuesReducer =
-    R.reduce((prev) => [...prev, createTimeRandomValueSerie(addInterval(prevDate(prev)))]);
+  const subtractInterval = subtractSeconds(INTERVAL);
+  const negativeInterval = addSeconds(backInHistory, NOW);
+  const prevDate = R.curry((prevFn, prevArr) => prevFn(prevArr)[0]);
+
+  const costReducer = R.reduce(
+    (prev) => R.append(randomSerieFromLast(prev), prev)
+  );
+  // reduceRight iterator have different params order
+  const forecastReducer = R.reduceRight(
+    (_, prev) => R.prepend(randomSerieFromFirst(prev), prev)
+  );
+
+  const randomSerieFromLast = R.compose(
+    createTimeRandomValueSerie,
+    addInterval,
+    prevDate(R.last)
+  );
+
+  const randomSerieFromFirst = R.compose(
+    createTimeRandomValueSerie,
+    subtractInterval,
+    prevDate(R.head)
+  );
+
+  const forecastHorizonInterval = addSeconds(FORECAST_HORIZON * INTERVAL, NOW);
 
   const data = [
     {
       key: 'Cost',
       bar: true,
-      values: valuesReducer([createTimeRandomValueSerie(negativeInterval)], range(10))
+      values: costReducer(
+        [createTimeRandomValueSerie(negativeInterval)], range(HISTORY_LENGTH)
+      )
     },
     {
       key: 'Forecast',
       bar: true,
-      values: valuesReducer([createTimeRandomValueSerie(NOW)], range(4))
+      values: forecastReducer(
+        [createTimeRandomValueSerie(forecastHorizonInterval)], range(forecastLength - 1)
+      )
     },
     {
       key: 'Budget',
-      values: valuesReducer()
+      values: costReducer()
     }
   ];
 
