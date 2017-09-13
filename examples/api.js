@@ -14,7 +14,6 @@ server.use(middlewares);
 
 // Add custom routes before JSON Server router
 server.get('/multibar-line', (req, res) => {
-  const range = length => Array.apply(undefined, {length: length});
 
   const HISTORY_LENGTH = parseInt(req.query.history_length || 0);
   const FORECAST_HORIZON = 4;
@@ -69,14 +68,14 @@ server.get('/multibar-line', (req, res) => {
       key: 'Cost',
       bar: true,
       values: costReducer(
-        [createTimeRandomValueSerie(negativeInterval)], range(HISTORY_LENGTH)
+        [createTimeRandomValueSerie(negativeInterval)], R.range(0, HISTORY_LENGTH)
       )
     },
     {
       key: 'Forecast',
       bar: true,
       values: forecastReducer(
-        [createTimeRandomValueSerie(forecastHorizonInterval)], range(forecastLength - 1)
+        [createTimeRandomValueSerie(forecastHorizonInterval)], R.range(0, forecastLength - 1)
       )
     },
     {
