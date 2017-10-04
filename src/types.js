@@ -1,4 +1,7 @@
 /* @flow */
+/**
+ * Idea for whole interface was taken from plotly.js
+ */
 
 type ICartesianData = [string, number];
 
@@ -17,14 +20,19 @@ interface ICartesianComponent {
   y: ICartesianData | (datum: any) => string | number;
 }
 
-interface IBarComponent extends IComponent, ICartesianComponent {
+export interface IBarComponent extends IComponent, ICartesianComponent {
   type: 'bar'
 }
 
-interface ILineComponent extends IComponent {
+export interface ILineComponent extends IComponent {
   type: 'line'
 }
 
+/**
+ * This hold the configuration of how data is displayed on a chart, like:
+ * x/y axis label, scale type; barmode;
+ * @type {[type]}
+ */
 export interface ILayout {
   barmode ? : 'stack' | 'group';
   xAxis ? : any;
@@ -34,6 +42,7 @@ export interface ILayout {
 
 interface IDataOptions {
   url: string,
+  initialUrl?: string,
   interval: number
 }
 
