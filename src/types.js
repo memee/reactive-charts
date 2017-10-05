@@ -29,9 +29,8 @@ export interface ILineComponent extends IComponent {
 }
 
 /**
- * This hold the configuration of how data is displayed on a chart, like:
+ * This holds the configuration of how data is displayed on a chart, like:
  * x/y axis label, scale type; barmode;
- * @type {[type]}
  */
 export interface ILayout {
   barmode ? : 'stack' | 'group';
