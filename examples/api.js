@@ -16,6 +16,7 @@ server.use(middlewares);
 server.get('/multibar-line', (req, res) => {
 
   const HISTORY_LENGTH = parseInt(req.query.history_length || 0);
+  const TIMEOUT = parseInt(req.query.timeout || 0);
   const FORECAST_HORIZON = 4;
   const INTERVAL = 5;
   const NOW = new Date();
@@ -63,7 +64,7 @@ server.get('/multibar-line', (req, res) => {
 
   const forecastHorizonInterval = addSeconds(FORECAST_HORIZON * INTERVAL, NOW);
 
-  const data = [
+  const data = () => [
     {
       key: 'Cost',
       bar: true,
@@ -84,7 +85,11 @@ server.get('/multibar-line', (req, res) => {
     }
   ];
 
-  res.jsonp(data);
+  if (TIMEOUT > 0) {
+    setTimeout(() => res.jsonp(data()), TIMEOUT);
+  } else {
+    res.jsonp(data());
+  }
 });
 
 // To handle POST, PUT and PATCH you need to use a body-parser
