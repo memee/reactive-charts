@@ -2,6 +2,7 @@
   "name": "reactive-charts",
   "version": "0.0.0",
   "description": "reusable reactive charts based on d3",
+  "engines": { "node" : ">=8.0.0" },
   "main": "lib/reactive-charts.js",
   "scripts": {
     "api": "./examples/api.js",
@@ -56,7 +57,9 @@
     "d3": "^4.4.4"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "most": "^1.7.2",
+    "most-request": "^2.1.0",
     "ramda": "^0.23.0"
   }
 }
