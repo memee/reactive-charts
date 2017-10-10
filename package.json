@@ -10,6 +10,7 @@
     "dev": "npm run flow && webpack-dev-server --env dev --config webpack.config.js --progress --colors --profile --watch",
     "flow": "flow",
     "flow:check": "flow check",
+    "heroku-postbuild": "npm install json-server@0.10.x chance@1.0.x --no-save",
     "lint": "eslint src/**/*.js",
     "test": "tape -r babel-register ./src/**/*.spec.js | faucet",
     "test:watch": "tape-watch -r babel-register ./src/**/*.spec.js -o '| faucet'"
