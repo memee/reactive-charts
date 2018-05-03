@@ -47,13 +47,13 @@ export class IO<T> {
     this.effectFn = effectFn;
   }
 
-  map(fn: any) {
+  map(fn: any): IO<T> {
     return new IO(() => {
       return fn(this.effectFn());
     });
   }
 
-  bind(fn: any) {
+  bind(fn: any): IO<T> {
     return new IO(() => {
       return fn(this.effectFn()).run();
     });
