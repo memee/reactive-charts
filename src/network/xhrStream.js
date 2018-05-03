@@ -1,5 +1,6 @@
 /** @author Brian Cavalier */
 /** taken from private gist */
+/* eslint-disable */
 
 // @flow
 import { Stream, type Sink, type Scheduler, type Disposable } from 'most';
