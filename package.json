@@ -51,6 +51,7 @@
     "html-webpack-plugin": "^2.26.0",
     "json-server": "^0.10.0",
     "jsverify": "^0.8.2",
+    "ramda": "^0.23.0",
     "tape": "^4.7.0",
     "tape-watch": "^2.3.0",
     "webpack": "^2.2.0",
@@ -63,6 +64,6 @@
     "most": "^1.7.2",
     "most-request": "^2.1.0",
     "most-subject": "^5.3.0",
-    "ramda": "^0.23.0"
+    "sanctuary": "^0.14.1"
   }
 }
