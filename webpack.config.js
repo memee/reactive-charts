@@ -72,7 +72,7 @@ module.exports = function(options) {
     devServer: {
       contentBase: [
         path.join(__dirname, 'examples'),
-        path.join(__dirname, 'node_modules/d3/build')
+        path.join(__dirname, 'node_modules/d3/dist')
       ],
       compress: true,
       port: 8080
