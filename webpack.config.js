@@ -9,6 +9,9 @@ module.exports = function(options) {
   var plugins = [], outputFile, entry, output;
   var libSource = __dirname + '/src/index.js';
 
+  const BUILD = options === 'build';
+  const DEV = options === 'dev';
+
   if (options === 'build') {
     plugins = plugins.concat([
       new webpack.optimize.DedupePlugin(),
@@ -86,6 +89,15 @@ module.exports = function(options) {
       rules: [
         {
           test: /(\.jsx|\.js)$/,
+          loader: 'eslint-loader',
+          exclude: /node_modules/,
+          enforce: 'pre',
+          options: {
+            emitWarning: DEV
+          }
+        },
+        {
+          test: /(\.jsx|\.js)$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
@@ -94,11 +106,6 @@ module.exports = function(options) {
               presets: [['es2015', { modules: false }]]
             }
           }
-        },
-        {
-          test: /(\.jsx|\.js)$/,
-          loader: 'eslint-loader',
-          exclude: /node_modules/
         }
       ]
     },
