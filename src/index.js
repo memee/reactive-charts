@@ -2,7 +2,7 @@
 import * as d3 from 'd3';
 import * as most from 'most';
 
-import S from 's';
+import F from 'functional';
 
 import { d3select, append } from './d3io/d3io';
 import { xhrStream } from './network/xhrStream';
@@ -10,7 +10,7 @@ import { xhrStream } from './network/xhrStream';
 import type { IComponent, ILayout, IData, IFunctor } from './types';
 
 
-const renderSVG = S.compose(S.chain(append('svg')), d3select);
+const renderSVG = F.compose(F.chain(append('svg')), d3select);
 
 const POLL_INTERVAL = 1000;
 const API_URL = 'https://sleepy-lake-61171.herokuapp.com/multibar-line';

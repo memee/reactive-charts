@@ -6,11 +6,17 @@ var libraryName = JSON.parse(readFileSync(__dirname + '/package.json')).name;
 
 
 module.exports = function(options) {
-  var plugins = [], outputFile, entry, output;
+  var outputFile, entry, output;
   var libSource = __dirname + '/src/index.js';
 
   const BUILD = options === 'build';
   const DEV = options === 'dev';
+
+  var plugins = [
+    new webpack.DefinePlugin({
+      BUILD
+    })
+  ];
 
   if (options === 'build') {
     plugins = plugins.concat([

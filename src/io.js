@@ -27,7 +27,7 @@ SOFTWARE.
 
 */
 /* eslint-disable fp/no-this, fp/no-nil, fp/no-mutation, fp/no-throw */
-import S from 's';
+import F from 'functional';
 
 
 // Here we're against fp rules but we're preparing Monad which we would eventually
@@ -42,7 +42,7 @@ export class IO<T> {
   performUnsafeIO: any;
 
   constructor(effectFn: () => T) {
-    if (!S.is(Function, effectFn))
+    if (!F.is(Function, effectFn))
       throw 'IO Requires a function';
     this.effectFn = effectFn;
   }
