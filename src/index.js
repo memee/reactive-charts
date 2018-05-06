@@ -1,9 +1,8 @@
-
+// @flow
 import * as d3 from 'd3';
 import * as most from 'most';
-// @flow
 
-import { chain, compose, pathOr } from 'ramda';
+import S from 's';
 
 import { d3select, append } from './d3io/d3io';
 import { xhrStream } from './network/xhrStream';
@@ -11,7 +10,7 @@ import { xhrStream } from './network/xhrStream';
 import type { IComponent, ILayout, IData, IFunctor } from './types';
 
 
-const renderSVG = compose(chain(append('svg')), d3select);
+const renderSVG = S.compose(S.chain(append('svg')), d3select);
 
 const POLL_INTERVAL = 1000;
 const API_URL = 'https://sleepy-lake-61171.herokuapp.com/multibar-line';
@@ -28,7 +27,7 @@ const getJSON = (url) => xhrStream(() => {
   xhr.responseType = 'json';
   /* eslint-enable */
   return xhr;
-}).map(pathOr({}, ['target', 'response']));
+});
 
 const getNext = (url, interval) =>
   getJSON(url)
@@ -39,7 +38,7 @@ const getNext = (url, interval) =>
 //
 
 // eslint-disable-next-line no-console
-const consume = ([cost]) => console.log(cost.values[0]);
+const consume = (it) => console.log(it);
 
 /* eslint-disable */
 getNext(API_URL, POLL_INTERVAL)

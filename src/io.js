@@ -27,7 +27,7 @@ SOFTWARE.
 
 */
 /* eslint-disable fp/no-this, fp/no-nil, fp/no-mutation, fp/no-throw */
-import * as R from 'ramda';
+import S from 's';
 
 
 // Here we're against fp rules but we're preparing Monad which we would eventually
@@ -42,7 +42,7 @@ export class IO<T> {
   performUnsafeIO: any;
 
   constructor(effectFn: () => T) {
-    if (!R.is(Function, effectFn))
+    if (!S.is(Function, effectFn))
       throw 'IO Requires a function';
     this.effectFn = effectFn;
   }
@@ -70,3 +70,9 @@ export class IO<T> {
 
 IO.prototype.perform = IO.prototype.performUnsafeIO = IO.prototype.run;
 IO.prototype.chain = IO.prototype.bind;
+// $FlowFixMe
+IO.prototype['fantasy-land/chain'] = IO.prototype.chain;
+// $FlowFixMe
+IO.prototype['fantasy-land/ap'] = IO.prototype.ap;
+// $FlowFixMe
+IO.prototype['fantasy-land/map'] = IO.prototype.map;
